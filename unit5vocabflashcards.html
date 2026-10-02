@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AP Statistics — Unit 5 Flashcards</title>
+  <style>
+    :root {
+      --navy: #0C2340;
+      --gold: #FFD600;
+      --white: #FFFFFF;
+      --shadow: rgba(0, 0, 0, 0.28);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--navy);
+      color: var(--white);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    button {
+      border: 2px solid var(--gold);
+      border-radius: 12px;
+      background: var(--navy);
+      color: var(--gold);
+      cursor: pointer;
+      font: inherit;
+      font-weight: 700;
+      padding: 0.7rem 1rem;
+      transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    button:hover, button:focus-visible {
+      background: var(--gold);
+      color: var(--navy);
+      outline: none;
+    }
+
+    button:active { transform: scale(0.97); }
+    button * { pointer-events: none; }
+
+    .app {
+      width: min(100%, 920px);
+      margin: 0 auto;
+      padding: 2rem 1rem 3rem;
+      text-align: center;
+    }
+
+    header { margin-bottom: 1.5rem; }
+
+    .brand {
+      color: var(--gold);
+      font-size: clamp(1.2rem, 3vw, 1.65rem);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      color: var(--white);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      margin: 0.25rem 0 0;
+    }
+
+    .subtitle {
+      color: var(--white);
+      font-size: 1.05rem;
+      margin: 0.45rem 0 0;
+      opacity: 0.88;
+    }
+
+    .counter {
+      color: var(--white);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.55rem;
+    }
+
+    .progress-track {
+      width: min(560px, 100%);
+      height: 7px;
+      margin: 0 auto 1.35rem;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.18);
+      border-radius: 999px;
+    }
+
+    .progress-bar {
+      width: 3.125%;
+      height: 100%;
+      background: var(--gold);
+      border-radius: inherit;
+      transition: width 0.25s ease;
+    }
+
+    .card-scene {
+      width: min(560px, 100%);
+      height: 320px;
+      margin: 0 auto 1.4rem;
+      perspective: 1200px;
+    }
+
+    .flashcard {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transition: transform 0.5s ease;
+    }
+
+    .flashcard.is-flipped { transform: rotateY(180deg); }
+
+    .card-face {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      border: 3px solid var(--gold);
+      border-radius: 12px;
+      box-shadow: 0 12px 28px var(--shadow);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .card-front {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .card-front h2 {
+      margin: 0;
+      font-size: clamp(1.55rem, 5vw, 2rem);
+      line-height: 1.2;
+    }
+
+    .card-back {
+      background: var(--white);
+      color: var(--navy);
+      font-size: 1rem;
+      line-height: 1.55;
+      text-align: left;
+      transform: rotateY(180deg);
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.7rem;
+      margin: 0 auto 1rem;
+    }
+
+    .hint {
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .print-grid { display: none; }
+
+    @media (max-width: 620px) {
+      .app { padding-top: 1.35rem; }
+      .card-scene { height: 300px; }
+      .card-face { padding: 1.4rem; }
+      .controls button { flex: 1 1 40%; }
+    }
+
+    @media print {
+      @page { margin: 0.5in; }
+
+      body { background: var(--navy); }
+      .app { width: 100%; max-width: none; padding: 0; }
+      header { margin-bottom: 0.35in; }
+      .controls, .hint, .counter, .progress-track, .card-scene { display: none !important; }
+
+      .print-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.18in;
+      }
+
+      .print-card {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        min-height: 1.55in;
+        overflow: hidden;
+        border: 2px solid var(--gold);
+        border-radius: 12px;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .print-term, .print-definition {
+        display: flex;
+        align-items: center;
+        padding: 0.18in;
+      }
+
+      .print-term {
+        justify-content: center;
+        background: var(--navy);
+        color: var(--white);
+        font-size: 0.82rem;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .print-definition {
+        background: var(--white);
+        border-left: 2px dashed var(--navy);
+        color: var(--navy);
+        font-size: 0.69rem;
+        line-height: 1.3;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app" id="app">
+    <header>
+      <p class="brand">AP Statistics</p>
+      <h1>AP Statistics — Unit 5 Flashcards</h1>
+      <p class="subtitle">Unit 5: Regression Analysis</p>
+    </header>
+
+    <div class="counter" id="counter" aria-live="polite">Card 1 of 32</div>
+    <div class="progress-track" aria-label="Deck progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <section class="card-scene" aria-label="Current flashcard">
+      <div class="flashcard" id="flashcard" data-action="flip" tabindex="0" role="button" aria-label="Flashcard. Click to flip.">
+        <div class="card-face card-front"><h2 id="termText"></h2></div>
+        <div class="card-face card-back"><p id="definitionText"></p></div>
+      </div>
+    </section>
+
+    <div class="controls">
+      <button type="button" data-action="previous">Previous</button>
+      <button type="button" data-action="next">Next</button>
+      <button type="button" data-action="shuffle">Shuffle</button>
+      <button type="button" data-action="print">Print All Cards</button>
+      <button type="button" data-action="reset">Reset Order</button>
+    </div>
+
+    <p class="hint">Click the card to flip • Use ← → to navigate • Press Space to flip</p>
+    <section class="print-grid" id="printGrid" aria-label="Printable flashcards"></section>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const originalCards = [
+        { term: 'Least-Squares Regression Line (LSRL)', definition: 'The line that minimizes the sum of the squared vertical deviations, or residuals, between the observed y-values and the predicted y-values. It has the form ŷ = a + bx.' },
+        { term: 'Slope (b) of the LSRL', definition: 'The predicted change in y for each increase of 1 unit in x. In context, a positive b indicates an increasing linear relationship and a negative b indicates a decreasing linear relationship.' },
+        { term: 'y-Intercept (a) of the LSRL', definition: 'The predicted value of y when x = 0. It is the value a in the equation ŷ = a + bx and should be interpreted only when x = 0 is meaningful and within the scope of the data.' },
+        { term: 'Predicted Value (ŷ)', definition: 'The value of the response variable predicted by the LSRL for a particular explanatory-variable value x. It is calculated with ŷ = a + bx.' },
+        { term: 'Residual', definition: 'The difference between an observed response and its predicted response: residual = y − ŷ. Positive residuals mean the point is above the regression line; negative residuals mean it is below the line.' },
+        { term: 'Residual Plot', definition: 'A scatterplot of residuals against the explanatory variable x or another relevant horizontal variable. A random, roughly rectangular pattern around 0 supports the use of a linear model.' },
+        { term: 'Standard Deviation of the Residuals (s)', definition: 'A measure of the typical vertical distance between observed responses and the LSRL. It estimates the standard deviation of the random errors and is measured in response-variable units.' },
+        { term: 'Coefficient of Determination (r²)', definition: 'The proportion of the variability in the response variable y that is accounted for by the linear regression on x. It is usually reported as a percent in context.' },
+        { term: 'Correlation Coefficient (r)', definition: 'A number from −1 to 1 that measures the direction and strength of a linear association between two quantitative variables. It has no units and is not resistant to outliers.' },
+        { term: 'Extrapolation', definition: 'Using a regression model to make predictions for x-values outside the observed range of the explanatory variable. Extrapolation can be unreliable because the linear pattern may not continue.' },
+        { term: 'Influential Point', definition: 'An observation that substantially changes the regression line, correlation, or other results when it is removed. Points with unusual x-values are more likely to be influential.' },
+        { term: 'Leverage', definition: 'A measure of how far an observation’s explanatory-variable value is from the mean of x. High-leverage points have unusually large or small x-values and can strongly affect the regression line.' },
+        { term: 'Simple Linear Regression Model', definition: 'A model for a quantitative response y and one quantitative explanatory variable x: y = α + βx + ε, where α and β are population parameters and ε represents random error.' },
+        { term: 'Population Regression Line (μy = α + βx)', definition: 'The line describing the mean response μy for each value of x in the population. In the model μy = α + βx, α is the true y-intercept and β is the true slope.' },
+        { term: 'True Slope (β)', definition: 'The population parameter that represents the change in the mean response μy for each increase of 1 unit in x. The sample slope b estimates β.' },
+        { term: 'True y-Intercept (α)', definition: 'The population parameter representing the mean response when x = 0. The sample intercept a estimates α.' },
+        { term: 'Standard Error of the Slope (SEb)', definition: 'The estimated standard deviation of the sampling distribution of the sample slope b. It measures the typical sampling variability of b around the true slope β.' },
+        { term: 't-Test for the Slope', definition: 'A significance test for a population regression slope β. The test statistic is t = (b − β₀) / SEb, with df = n − 2, when the regression-inference conditions are satisfied.' },
+        { term: 't-Interval for the Slope', definition: 'A confidence interval for the population slope β: b ± t*SEb, where t* is based on the chosen confidence level and df = n − 2.' },
+        { term: 'Null Hypothesis for Slope (H₀: β = 0)', definition: 'The null hypothesis that the population linear relationship has zero slope. Under H₀: β = 0, there is no linear change in the mean response as x changes.' },
+        { term: 'Alternative Hypothesis for Slope', definition: 'A statement about the population slope that contradicts H₀, such as Hₐ: β > 0, Hₐ: β < 0, or Hₐ: β ≠ 0. It determines the direction of the t-test.' },
+        { term: 'Conditions for Regression Inference (LINE-R)', definition: 'Conditions supporting inference for a regression slope: Linear relationship, Independent observations, Normally distributed responses or errors at each x, Equal standard deviation of responses or errors, and Random data or a randomized process.' },
+        { term: 'Residuals vs. Fitted Values Plot', definition: 'A plot of residuals against fitted, or predicted, values ŷ. A random pattern around 0 supports linearity and equal variance; curvature or a funnel shape suggests a problem with the model conditions.' },
+        { term: 'Normal Probability Plot of Residuals', definition: 'A graph used to assess whether regression residuals are approximately Normally distributed. Points close to a straight line support the Normality condition; strong curvature or outliers suggests a violation.' },
+        { term: 'Degrees of Freedom for Regression t (df = n − 2)', definition: 'The degrees of freedom used for t procedures about a regression slope. Two degrees of freedom are used to estimate the slope and intercept, leaving n − 2 degrees of freedom for the residual variation.' },
+        { term: 'Confidence Interval for the Slope', definition: 'An interval of plausible values for the population slope β, calculated as b ± t*SEb. A correct interpretation refers to the population change in mean response for a 1-unit increase in x.' },
+        { term: 'Interpretation of the Slope in Context', definition: 'For each increase of 1 unit in the explanatory variable x, the predicted or mean response y changes by b units, on average, in the direction indicated by the sign of b.' },
+        { term: 'Interpretation of r²', definition: 'In context, about 100r²% of the variation in the response variable is accounted for by the linear regression model using the explanatory variable.' },
+        { term: 'Interpretation of s (Standard Deviation of Residuals)', definition: 'The actual response values typically differ from the values predicted by the LSRL by about s response-variable units.' },
+        { term: 'Regression to the Mean', definition: 'The tendency for unusually high or low observations to be followed by observations closer to the population mean. It can occur because extreme observations include random variation that is unlikely to repeat fully.' },
+        { term: 'Causation vs. Association', definition: 'A strong association or statistically significant slope does not by itself establish that x causes changes in y. Causation requires a well-designed randomized experiment or strong additional justification.' },
+        { term: 'Significance Test Conclusion for a Slope', definition: 'A conclusion should state whether the evidence is sufficient to reject H₀, give the p-value or its meaning, and describe the evidence for a linear relationship in the population in context.' }
+      ];
+
+      const app = document.getElementById('app');
+      const flashcard = document.getElementById('flashcard');
+      const termText = document.getElementById('termText');
+      const definitionText = document.getElementById('definitionText');
+      const counter = document.getElementById('counter');
+      const progressBar = document.getElementById('progressBar');
+      const printGrid = document.getElementById('printGrid');
+
+      let cards = originalCards.slice();
+      let currentIndex = 0;
+      let isFlipped = false;
+
+      function renderCard() {
+        const card = cards[currentIndex];
+        termText.textContent = card.term;
+        definitionText.textContent = card.definition;
+        counter.textContent = 'Card ' + (currentIndex + 1) + ' of ' + cards.length;
+        progressBar.style.width = (((currentIndex + 1) / cards.length) * 100) + '%';
+        flashcard.classList.toggle('is-flipped', isFlipped);
+        flashcard.setAttribute('aria-label', isFlipped ? 'Definition for ' + card.term + '. Click to flip back.' : 'Term: ' + card.term + '. Click to flip.');
+      }
+
+      function flipCard() {
+        isFlipped = !isFlipped;
+        renderCard();
+      }
+
+      function moveCard(direction) {
+        currentIndex = (currentIndex + direction + cards.length) % cards.length;
+        isFlipped = false;
+        renderCard();
+      }
+
+      function shuffleCards() {
+        for (let i = cards.length - 1; i > 0; i -= 1) {
+          const randomIndex = Math.floor(Math.random() * (i + 1));
+          const temporaryCard = cards[i];
+          cards[i] = cards[randomIndex];
+          cards[randomIndex] = temporaryCard;
+        }
+        currentIndex = 0;
+        isFlipped = false;
+        renderCard();
+      }
+
+      function resetDeck() {
+        cards = originalCards.slice();
+        currentIndex = 0;
+        isFlipped = false;
+        renderCard();
+      }
+
+      function renderPrintCards() {
+        printGrid.innerHTML = '';
+        originalCards.forEach(function (card, index) {
+          const printCard = document.createElement('article');
+          printCard.className = 'print-card';
+
+          const term = document.createElement('div');
+          term.className = 'print-term';
+          term.textContent = (index + 1) + '. ' + card.term;
+
+          const definition = document.createElement('div');
+          definition.className = 'print-definition';
+          definition.textContent = card.definition;
+
+          printCard.appendChild(term);
+          printCard.appendChild(definition);
+          printGrid.appendChild(printCard);
+        });
+      }
+
+      app.addEventListener('click', function (event) {
+        const actionTarget = event.target.closest('[data-action]');
+        if (!actionTarget || !app.contains(actionTarget)) return;
+
+        const action = actionTarget.dataset.action;
+        if (action === 'flip') flipCard();
+        if (action === 'previous') moveCard(-1);
+        if (action === 'next') moveCard(1);
+        if (action === 'shuffle') shuffleCards();
+        if (action === 'reset') resetDeck();
+        if (action === 'print') window.print();
+      });
+
+      app.addEventListener('keydown', function (event) {
+        if (event.target !== flashcard && event.target.tagName !== 'BODY') return;
+
+        if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          moveCard(-1);
+        } else if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          moveCard(1);
+        } else if (event.key === ' ') {
+          event.preventDefault();
+          flipCard();
+        }
+      });
+
+      renderPrintCards();
+      renderCard();
+    });
+  </script>
+</body>
+</html>

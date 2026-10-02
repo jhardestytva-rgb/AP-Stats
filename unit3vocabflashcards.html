@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AP Statistics — Unit 3 Flashcards</title>
+  <style>
+    :root {
+      --navy: #0C2340;
+      --gold: #FFD600;
+      --white: #FFFFFF;
+      --shadow: rgba(0, 0, 0, 0.28);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--navy);
+      color: var(--white);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    button {
+      border: 2px solid var(--gold);
+      border-radius: 12px;
+      background: var(--navy);
+      color: var(--gold);
+      cursor: pointer;
+      font: inherit;
+      font-weight: 700;
+      padding: 0.7rem 1rem;
+      transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    button:hover, button:focus-visible {
+      background: var(--gold);
+      color: var(--navy);
+      outline: none;
+    }
+
+    button:active { transform: scale(0.97); }
+    button * { pointer-events: none; }
+
+    .app {
+      width: min(100%, 920px);
+      margin: 0 auto;
+      padding: 2rem 1rem 3rem;
+      text-align: center;
+    }
+
+    header { margin-bottom: 1.5rem; }
+
+    .brand {
+      color: var(--gold);
+      font-size: clamp(1.2rem, 3vw, 1.65rem);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      color: var(--white);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      margin: 0.25rem 0 0;
+    }
+
+    .subtitle {
+      color: var(--white);
+      font-size: 1.05rem;
+      margin: 0.45rem 0 0;
+      opacity: 0.88;
+    }
+
+    .counter {
+      color: var(--white);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.55rem;
+    }
+
+    .progress-track {
+      width: min(560px, 100%);
+      height: 7px;
+      margin: 0 auto 1.35rem;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.18);
+      border-radius: 999px;
+    }
+
+    .progress-bar {
+      width: 3.125%;
+      height: 100%;
+      background: var(--gold);
+      border-radius: inherit;
+      transition: width 0.25s ease;
+    }
+
+    .card-scene {
+      width: min(560px, 100%);
+      height: 320px;
+      margin: 0 auto 1.4rem;
+      perspective: 1200px;
+    }
+
+    .flashcard {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transition: transform 0.5s ease;
+    }
+
+    .flashcard.is-flipped { transform: rotateY(180deg); }
+
+    .card-face {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      border: 3px solid var(--gold);
+      border-radius: 12px;
+      box-shadow: 0 12px 28px var(--shadow);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .card-front {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .card-front h2 {
+      margin: 0;
+      font-size: clamp(1.55rem, 5vw, 2rem);
+      line-height: 1.2;
+    }
+
+    .card-back {
+      background: var(--white);
+      color: var(--navy);
+      font-size: 1rem;
+      line-height: 1.55;
+      text-align: left;
+      transform: rotateY(180deg);
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.7rem;
+      margin: 0 auto 1rem;
+    }
+
+    .hint {
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .print-grid { display: none; }
+
+    @media (max-width: 620px) {
+      .app { padding-top: 1.35rem; }
+      .card-scene { height: 300px; }
+      .card-face { padding: 1.4rem; }
+      .controls button { flex: 1 1 40%; }
+    }
+
+    @media print {
+      @page { margin: 0.5in; }
+
+      body { background: var(--navy); }
+      .app { width: 100%; max-width: none; padding: 0; }
+      header { margin-bottom: 0.35in; }
+      .controls, .hint, .counter, .progress-track, .card-scene { display: none !important; }
+
+      .print-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.18in;
+      }
+
+      .print-card {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        min-height: 1.55in;
+        overflow: hidden;
+        border: 2px solid var(--gold);
+        border-radius: 12px;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .print-term, .print-definition {
+        display: flex;
+        align-items: center;
+        padding: 0.18in;
+      }
+
+      .print-term {
+        justify-content: center;
+        background: var(--navy);
+        color: var(--white);
+        font-size: 0.82rem;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .print-definition {
+        background: var(--white);
+        border-left: 2px dashed var(--navy);
+        color: var(--navy);
+        font-size: 0.69rem;
+        line-height: 1.3;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app" id="app">
+    <header>
+      <p class="brand">AP Statistics</p>
+      <h1>AP Statistics — Unit 3 Flashcards</h1>
+      <p class="subtitle">Unit 3: Inference for Categorical Data</p>
+    </header>
+
+    <div class="counter" id="counter" aria-live="polite">Card 1 of 32</div>
+    <div class="progress-track" aria-label="Deck progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <section class="card-scene" aria-label="Current flashcard">
+      <div class="flashcard" id="flashcard" data-action="flip" tabindex="0" role="button" aria-label="Flashcard. Click to flip.">
+        <div class="card-face card-front">
+          <h2 id="termText"></h2>
+        </div>
+        <div class="card-face card-back">
+          <p id="definitionText"></p>
+        </div>
+      </div>
+    </section>
+
+    <div class="controls">
+      <button type="button" data-action="previous">Previous</button>
+      <button type="button" data-action="next">Next</button>
+      <button type="button" data-action="shuffle">Shuffle</button>
+      <button type="button" data-action="print">Print All Cards</button>
+      <button type="button" data-action="reset">Reset Order</button>
+    </div>
+
+    <p class="hint">Click the card to flip • Use ← → to navigate • Press Space to flip</p>
+    <section class="print-grid" id="printGrid" aria-label="Printable flashcards"></section>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const originalCards = [
+        { term: 'Point Estimate', definition: 'A single statistic used to estimate a population parameter. For a population proportion p, the point estimate is the sample proportion p̂.' },
+        { term: 'Confidence Interval', definition: 'An interval of plausible values for a population parameter, calculated from sample data at a stated confidence level.' },
+        { term: 'Margin of Error', definition: 'The maximum expected distance between a point estimate and the true population parameter for a stated confidence level. It is the amount added to and subtracted from the point estimate.' },
+        { term: 'Critical Value (z*)', definition: 'The standardized value that marks the boundary of the middle confidence area under the standard normal curve. It determines the margin of error for a z-interval.' },
+        { term: 'Standard Error for a Proportion', definition: 'The estimated standard deviation of the sampling distribution of p̂. For an interval, SE = √[p̂(1 − p̂) / n].' },
+        { term: 'One-Proportion z-Interval', definition: 'A confidence interval for one population proportion p: p̂ ± z*√[p̂(1 − p̂) / n]. It estimates p when the appropriate conditions are met.' },
+        { term: 'One-Proportion z-Test', definition: 'A significance test for one population proportion. The test statistic is z = (p̂ − p₀) / √[p₀(1 − p₀) / n], where p₀ is the null value.' },
+        { term: 'Two-Proportion z-Interval', definition: 'A confidence interval for the difference between two population proportions, p₁ − p₂: (p̂₁ − p̂₂) ± z*√[p̂₁(1 − p̂₁)/n₁ + p̂₂(1 − p̂₂)/n₂].' },
+        { term: 'Two-Proportion z-Test', definition: 'A significance test for comparing two population proportions. Under H₀: p₁ = p₂, the standard error uses the pooled proportion.' },
+        { term: 'Null Hypothesis (H₀)', definition: 'A statement that describes a population parameter or relationship assumed true for the purpose of a statistical test; it usually represents no difference or no association.' },
+        { term: 'Alternative Hypothesis (Hₐ)', definition: 'A statement that contradicts H₀ and represents the difference, relationship, or direction the study seeks evidence for.' },
+        { term: 'p-value', definition: 'The probability, assuming H₀ is true, of obtaining a result at least as extreme as the observed result in the direction specified by Hₐ.' },
+        { term: 'Significance Level (α)', definition: 'The chosen probability of rejecting H₀ when H₀ is actually true. Common choices are 0.05 and 0.01.' },
+        { term: 'Type I Error', definition: 'Rejecting H₀ when H₀ is true; a false positive. The probability of a Type I error is α when the test is conducted at significance level α.' },
+        { term: 'Type II Error', definition: 'Failing to reject H₀ when H₀ is false; a false negative.' },
+        { term: 'Power of a Test', definition: 'The probability that a test correctly rejects H₀ when a particular alternative value is true. Power = 1 − P(Type II error).' },
+        { term: 'Statistically Significant', definition: 'A result is statistically significant at level α when the p-value is less than or equal to α, providing sufficient evidence to reject H₀.' },
+        { term: 'Conditions for Inference', definition: 'The requirements that justify a procedure: Random data or random assignment; Large Counts; and Independence, often checked with the 10% condition when sampling without replacement.' },
+        { term: 'Random Condition', definition: 'The data come from a random sample, a randomized experiment, or another process that justifies chance-based inference.' },
+        { term: 'Large Counts Condition for Proportions', definition: 'For a one-proportion procedure, both expected counts must be at least 10: np₀ ≥ 10 and n(1 − p₀) ≥ 10 for a test, or n p̂ ≥ 10 and n(1 − p̂) ≥ 10 for an interval. For two proportions, these checks are made in each group.' },
+        { term: 'Independence / 10% Condition', definition: 'Observations should be independent. When sampling without replacement, the sample size should be no more than 10% of the population size.' },
+        { term: 'Pooled Proportion (p̂c)', definition: 'The combined sample proportion of successes used in a two-proportion z-test when H₀: p₁ = p₂: p̂c = (x₁ + x₂)/(n₁ + n₂).' },
+        { term: 'Chi-Square Statistic (χ²)', definition: 'A measure of how far observed counts are from expected counts: χ² = Σ[(Observed − Expected)² / Expected]. Larger values indicate greater disagreement with H₀.' },
+        { term: 'Chi-Square Goodness-of-Fit Test', definition: 'A test of whether the distribution of one categorical variable in a population follows a specified set of proportions.' },
+        { term: 'Chi-Square Test for Homogeneity', definition: 'A test of whether several populations or treatment groups have the same distribution of a categorical variable.' },
+        { term: 'Chi-Square Test for Independence', definition: 'A test of whether two categorical variables are associated in one population. H₀ states that the variables are independent.' },
+        { term: 'Expected Counts', definition: 'The counts expected in each category or cell if H₀ is true. In a two-way table, Expected = (row total × column total) / grand total.' },
+        { term: 'Observed Counts', definition: 'The actual frequencies recorded in the categories or cells of a sample, usually denoted O.' },
+        { term: 'Degrees of Freedom for Chi-Square', definition: 'The number of independent pieces of information used by a chi-square distribution. Goodness-of-fit: df = k − 1. Two-way table: df = (r − 1)(c − 1).' },
+        { term: 'Chi-Square Distribution', definition: 'A family of right-skewed continuous distributions indexed by degrees of freedom. It is used to model chi-square statistics, which cannot be negative.' },
+        { term: 'Large Counts Condition for Chi-Square', definition: 'All expected counts must be at least 5. This condition supports using a chi-square distribution to approximate the sampling distribution of χ².' },
+        { term: 'Categorical Variable', definition: 'A variable that records group labels or category names rather than numerical measurements. Unit 3 inference procedures analyze proportions or distributions of categorical variables.' },
+        { term: 'Two-Way Table (Contingency Table)', definition: 'A table that organizes counts for two categorical variables. The interior entries are cells, with row totals, column totals, and a grand total.' },
+        { term: 'Cell', definition: 'An individual entry in a two-way table representing the count for one combination of a row category and a column category.' },
+        { term: 'Row Variable / Column Variable', definition: 'The two categorical variables displayed in a two-way table. One variable labels the rows and the other labels the columns; their roles can be switched.' },
+        { term: 'Conclusion in Context', definition: 'The final interpretation of a test: reject H₀ when the evidence is statistically significant, or fail to reject H₀ when it is not. State the conclusion in terms of the population, variables, and question.' }
+      ];
+
+      const app = document.getElementById('app');
+      const flashcard = document.getElementById('flashcard');
+      const termText = document.getElementById('termText');
+      const definitionText = document.getElementById('definitionText');
+      const counter = document.getElementById('counter');
+      const progressBar = document.getElementById('progressBar');
+      const printGrid = document.getElementById('printGrid');
+
+      let cards = originalCards.slice();
+      let currentIndex = 0;
+      let isFlipped = false;
+
+      function renderCard() {
+        const card = cards[currentIndex];
+        termText.textContent = card.term;
+        definitionText.textContent = card.definition;
+        counter.textContent = 'Card ' + (currentIndex + 1) + ' of ' + cards.length;
+        progressBar.style.width = (((currentIndex + 1) / cards.length) * 100) + '%';
+        flashcard.classList.toggle('is-flipped', isFlipped);
+        flashcard.setAttribute('aria-label', isFlipped ? 'Definition for ' + card.term + '. Click to flip back.' : 'Term: ' + card.term + '. Click to flip.');
+      }
+
+      function flipCard() {
+        isFlipped = !isFlipped;
+        renderCard();
+      }
+
+      function moveCard(direction) {
+        currentIndex = (currentIndex + direction + cards.length) % cards.length;
+        isFlipped = false;
+        renderCard();
+      }
+
+      function shuffleCards() {
+        for (let i = cards.length - 1; i > 0; i -= 1) {
+          const randomIndex = Math.floor(Math.random() * (i + 1));
+          const temporaryCard = cards[i];
+          cards[i] = cards[randomIndex];
+          cards[randomIndex] = temporaryCard;
+        }
+        currentIndex = 0;
+        isFlipped = false;
+        renderCard();
+      }
+
+      function resetDeck() {
+        cards = originalCards.slice();
+        currentIndex = 0;
+        isFlipped = false;
+        renderCard();
+      }
+
+      function renderPrintCards() {
+        printGrid.innerHTML = '';
+        originalCards.forEach(function (card, index) {
+          const printCard = document.createElement('article');
+          printCard.className = 'print-card';
+
+          const term = document.createElement('div');
+          term.className = 'print-term';
+          term.textContent = (index + 1) + '. ' + card.term;
+
+          const definition = document.createElement('div');
+          definition.className = 'print-definition';
+          definition.textContent = card.definition;
+
+          printCard.appendChild(term);
+          printCard.appendChild(definition);
+          printGrid.appendChild(printCard);
+        });
+      }
+
+      app.addEventListener('click', function (event) {
+        const actionTarget = event.target.closest('[data-action]');
+        if (!actionTarget || !app.contains(actionTarget)) return;
+
+        const action = actionTarget.dataset.action;
+        if (action === 'flip') flipCard();
+        if (action === 'previous') moveCard(-1);
+        if (action === 'next') moveCard(1);
+        if (action === 'shuffle') shuffleCards();
+        if (action === 'reset') resetDeck();
+        if (action === 'print') window.print();
+      });
+
+      app.addEventListener('keydown', function (event) {
+        if (event.target !== flashcard && event.target.tagName !== 'BODY') return;
+
+        if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          moveCard(-1);
+        } else if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          moveCard(1);
+        } else if (event.key === ' ') {
+          event.preventDefault();
+          flipCard();
+        }
+      });
+
+      renderPrintCards();
+      renderCard();
+    });
+  </script>
+</body>
+</html>

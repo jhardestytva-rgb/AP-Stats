@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AP Statistics Unit 1 Vocabulary Flashcards</title>
+  <style>
+    :root {
+      --navy: #0C2340;
+      --gold: #FFD600;
+      --white: #FFFFFF;
+      --shadow: rgba(0, 0, 0, 0.28);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--navy);
+      color: var(--white);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    button {
+      border: 2px solid var(--gold);
+      border-radius: 12px;
+      background: var(--navy);
+      color: var(--gold);
+      cursor: pointer;
+      font: inherit;
+      font-weight: 700;
+      padding: 0.7rem 1rem;
+      transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    button:hover, button:focus-visible {
+      background: var(--gold);
+      color: var(--navy);
+      outline: none;
+    }
+
+    button:active { transform: scale(0.97); }
+    button * { pointer-events: none; }
+
+    .app {
+      width: min(100%, 920px);
+      margin: 0 auto;
+      padding: 2rem 1rem 3rem;
+      text-align: center;
+    }
+
+    header { margin-bottom: 1.5rem; }
+
+    .brand {
+      color: var(--gold);
+      font-size: clamp(1.25rem, 3vw, 1.7rem);
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      margin: 0 0 0.35rem;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      color: var(--white);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      margin: 0;
+    }
+
+    .subtitle {
+      color: var(--gold);
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin: 0.45rem 0 0;
+    }
+
+    .counter {
+      color: var(--white);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.55rem;
+    }
+
+    .progress-track {
+      width: min(560px, 100%);
+      height: 7px;
+      margin: 0 auto 1.35rem;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.18);
+      border-radius: 999px;
+    }
+
+    .progress-bar {
+      width: 2%;
+      height: 100%;
+      background: var(--gold);
+      border-radius: inherit;
+      transition: width 0.25s ease;
+    }
+
+    .card-scene {
+      width: min(560px, 100%);
+      height: 320px;
+      margin: 0 auto 1.4rem;
+      perspective: 1200px;
+    }
+
+    .flashcard {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transition: transform 0.5s ease;
+    }
+
+    .flashcard.is-flipped { transform: rotateY(180deg); }
+
+    .card-face {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      border: 3px solid var(--gold);
+      border-radius: 12px;
+      box-shadow: 0 12px 28px var(--shadow);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .card-front { background: var(--navy); color: var(--white); }
+
+    .card-front h2 {
+      margin: 0;
+      font-size: clamp(1.55rem, 5vw, 2rem);
+      line-height: 1.2;
+    }
+
+    .card-back {
+      background: var(--white);
+      color: var(--navy);
+      font-size: 1rem;
+      line-height: 1.55;
+      text-align: left;
+      transform: rotateY(180deg);
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.7rem;
+      margin: 0 auto 1rem;
+    }
+
+    .hint {
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .print-grid { display: none; }
+
+    @media (max-width: 620px) {
+      .app { padding-top: 1.35rem; }
+      .card-scene { height: 300px; }
+      .card-face { padding: 1.4rem; }
+      .controls button { flex: 1 1 40%; }
+    }
+
+    @media print {
+      @page { margin: 0.5in; }
+
+      body { background: var(--navy); }
+      .app { width: 100%; max-width: none; padding: 0; }
+      header { margin-bottom: 0.35in; }
+      .controls, .hint, .counter, .progress-track, .card-scene { display: none !important; }
+
+      .print-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.18in;
+      }
+
+      .print-card {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        min-height: 1.55in;
+        overflow: hidden;
+        border: 2px solid var(--gold);
+        border-radius: 12px;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .print-term, .print-definition {
+        display: flex;
+        align-items: center;
+        padding: 0.18in;
+      }
+
+      .print-term {
+        justify-content: center;
+        background: var(--navy);
+        color: var(--white);
+        font-size: 0.86rem;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .print-definition {
+        background: var(--white);
+        border-left: 2px dashed var(--navy);
+        color: var(--navy);
+        font-size: 0.7rem;
+        line-height: 1.3;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app" id="app">
+    <header>
+      <p class="brand">AP Statistics</p>
+      <h1>Unit 1 Vocabulary</h1>
+      <p class="subtitle">Exploring One-Variable Data &amp; Collecting Data</p>
+    </header>
+
+    <div class="counter" id="counter" aria-live="polite">Card 1 of 51</div>
+    <div class="progress-track" aria-label="Deck progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <section class="card-scene" aria-label="Current flashcard">
+      <div class="flashcard" id="flashcard" data-action="flip" tabindex="0" role="button" aria-label="Flashcard. Click to flip.">
+        <div class="card-face card-front">
+          <h2 id="termText"></h2>
+        </div>
+        <div class="card-face card-back">
+          <p id="definitionText"></p>
+        </div>
+      </div>
+    </section>
+
+    <div class="controls">
+      <button type="button" data-action="previous">Previous</button>
+      <button type="button" data-action="next">Next</button>
+      <button type="button" data-action="shuffle">Shuffle</button>
+      <button type="button" data-action="print">Print All Cards</button>
+      <button type="button" data-action="reset">Reset</button>
+    </div>
+
+    <p class="hint">Click the card to flip • Use ← → to navigate • Press Space to flip</p>
+    <section class="print-grid" id="printGrid" aria-label="Printable flashcards"></section>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const originalCards = [
+        { term: 'Statistical Study', definition: 'A study in which data are collected from a sample to answer an investigative question about a larger population.' },
+        { term: 'Population', definition: 'All items or individuals of interest in a study. The population size is represented by N.' },
+        { term: 'Sample', definition: 'A subset of the population from which data are obtained. The sample size is represented by n.' },
+        { term: 'Parameter', definition: 'A numerical summary of a variable for a population.' },
+        { term: 'Statistic', definition: 'A numerical summary of a variable for a sample. Used to estimate the corresponding population parameter.' },
+        { term: 'Observational Unit', definition: 'An item or individual from which a datum is collected.' },
+        { term: 'Variable', definition: 'A characteristic that may change from one observational unit to another.' },
+        { term: 'Categorical Variable', definition: 'A variable that takes on values that are category names or group labels. Also called a qualitative variable.' },
+        { term: 'Quantitative Variable', definition: 'A variable that takes on numerical values for a measured or counted quantity. Also called a numerical variable.' },
+        { term: 'Discrete Variable', definition: 'A quantitative variable that can take on a countable number of values (finite or countably infinite).' },
+        { term: 'Continuous Variable', definition: 'A quantitative variable that can take on an infinite number of possible values within a given interval.' },
+        { term: 'Frequency Table', definition: 'A table showing the number of observational units in each category of a categorical variable.' },
+        { term: 'Relative Frequency Table', definition: 'A table showing the proportion of observational units in each category of a categorical variable.' },
+        { term: 'Histogram', definition: 'A graph that places quantitative values into ordered intervals (bins); bar height shows frequency or relative frequency.' },
+        { term: 'Dotplot', definition: 'A graph where each value of a quantitative variable is represented by a dot placed above the corresponding axis value.' },
+        { term: 'Stem-and-Leaf Plot', definition: 'A graph that splits each value into a stem (leading digit(s)) and a leaf (trailing digit), ordered from smallest to largest.' },
+        { term: 'Distribution Shape', definition: 'Described as skewed right (longer right tail), skewed left (longer left tail), or approximately symmetric.' },
+        { term: 'Unimodal / Bimodal', definition: 'Unimodal: one main peak. Bimodal: two prominent peaks. Uniform: no prominent peaks.' },
+        { term: 'Outlier', definition: 'A data point unusually small or large relative to the rest of the data. Identified as more than 1.5 × IQR beyond Q1 or Q3, or more than 2 standard deviations from the mean.' },
+        { term: 'Mean', definition: 'The sum of all values divided by the number of values. Denoted x̄ for a sample. Nonresistant to outliers.' },
+        { term: 'Median', definition: 'The middle value of an ordered data set. Resistant to outliers.' },
+        { term: 'Quartiles (Q1, Q2, Q3)', definition: 'Q1 = 25th percentile; Q2 = median; Q3 = 75th percentile. Q1 and Q3 bound the middle 50% of data.' },
+        { term: 'Interquartile Range (IQR)', definition: 'The difference between the third and first quartiles: Q3 − Q1. A resistant measure of spread.' },
+        { term: 'Standard Deviation', definition: 'A typical deviation of data values from their mean. Denoted s for a sample. Nonresistant to outliers.' },
+        { term: 'Five-Number Summary', definition: 'Minimum, Q1, Median, Q3, Maximum — the basis for a boxplot.' },
+        { term: 'Boxplot', definition: 'A graphical display of the five-number summary. The box spans Q1 to Q3; whiskers extend to non-outlier extremes.' },
+        { term: 'z-Score', definition: 'Measures how many standard deviations a value falls above or below the mean: z = (x − μ) / σ. Positive = above mean.' },
+        { term: 'Census', definition: 'Recording information from all items or individuals in a population.' },
+        { term: 'Observational Study', definition: 'A study where treatments are not imposed; the researcher records values of variables of interest.' },
+        { term: 'Experiment', definition: 'A study in which a researcher assigns treatments to experimental units to explore a question about a population.' },
+        { term: 'Explanatory Variable', definition: 'A variable whose levels are imposed on experimental units. Also called a factor. Its levels are the treatments.' },
+        { term: 'Response Variable', definition: 'An outcome measured on each experimental unit after the treatment has been administered.' },
+        { term: 'Confounding Variable', definition: 'A variable associated with both the explanatory and response variables that provides an alternative explanation for an observed relationship.' },
+        { term: 'Simple Random Sample (SRS)', definition: 'A sample of size n in which every possible sample of that size has the same chance of being selected.' },
+        { term: 'Stratified Random Sample', definition: 'Population divided into non-overlapping strata (homogeneous groups); an SRS is taken from each stratum.' },
+        { term: 'Cluster Random Sample', definition: 'Population divided into clusters (heterogeneous groups similar to each other); a random sample of clusters is selected and all units in chosen clusters are included.' },
+        { term: 'Systematic Random Sample', definition: 'Sample members selected using a random starting point and a fixed periodic interval.' },
+        { term: 'Voluntary Response Bias', definition: 'Bias that may occur when a sample consists entirely of volunteers (self-selected).' },
+        { term: 'Undercoverage Bias', definition: 'Bias that occurs when part of the population is excluded or less likely to be selected.' },
+        { term: 'Nonresponse Bias', definition: 'Bias that occurs when some selected individuals fail to respond, and respondents differ from nonrespondents.' },
+        { term: 'Response Bias', definition: 'Bias that occurs when responses tend to differ from the true value in one direction (e.g., leading questions, self-reporting).' },
+        { term: 'Control Group', definition: 'A group of experimental units used for comparison; may receive a placebo or a different treatment.' },
+        { term: 'Placebo Effect', definition: 'The difference between the average response to a placebo and the average response to no treatment.' },
+        { term: 'Single-Blind Experiment', definition: "Participants do not know which treatment they are receiving (or vice versa — the research team doesn't know)." },
+        { term: 'Double-Blind Experiment', definition: 'Neither participants nor the research team members who interact with them know which treatment each participant is receiving.' },
+        { term: 'Random Assignment', definition: 'Assigning treatments to experimental units by chance, to create groups similar with respect to extraneous variables.' },
+        { term: 'Replication', definition: 'Assigning more than one experimental unit to each treatment in an experiment.' },
+        { term: 'Direct Control', definition: 'Keeping the settings of potential extraneous variables the same across all experimental units.' },
+        { term: 'Completely Randomized Design (CRD)', definition: 'An experimental design in which treatments are assigned to experimental units completely at random.' },
+        { term: 'Randomized Block Design', definition: 'Experimental units are grouped into blocks (homogeneous with respect to a blocking variable); treatments are randomly assigned within each block.' },
+        { term: 'Matched Pairs Design', definition: 'A randomized block design with two treatments; units are paired on extraneous variables, and one treatment is randomly assigned to each member of the pair.' }
+      ];
+
+      const app = document.getElementById('app');
+      const flashcard = document.getElementById('flashcard');
+      const termText = document.getElementById('termText');
+      const definitionText = document.getElementById('definitionText');
+      const counter = document.getElementById('counter');
+      const progressBar = document.getElementById('progressBar');
+      const printGrid = document.getElementById('printGrid');
+
+      let cards = originalCards.slice();
+      let currentIndex = 0;
+      let isFlipped = false;
+
+      function renderCard() {
+        const card = cards[currentIndex];
+        termText.textContent = card.term;
+        definitionText.textContent = card.definition;
+        counter.textContent = 'Card ' + (currentIndex + 1) + ' of ' + cards.length;
+        progressBar.style.width = (((currentIndex + 1) / cards.length) * 100) + '%';
+        flashcard.classList.toggle('is-flipped', isFlipped);
+        flashcard.setAttribute('aria-label', isFlipped ? 'Definition for ' + card.term + '. Click to flip back.' : 'Term: ' + card.term + '. Click to flip.');
+      }
+
+      function flipCard() {
+        isFlipped = !isFlipped;
+        renderCard();
+      }
+
+      function moveCard(direction) {
+        currentIndex = (currentIndex + direction + cards.length) % cards.length;
+        isFlipped = false;
+        renderCard();
+      }
+
+      function shuffleCards() {
+        for (let i = cards.length - 1; i > 0; i -= 1) {
+          const randomIndex = Math.floor(Math.random() * (i + 1));
+          const temporaryCard = cards[i];
+          cards[i] = cards[randomIndex];
+          cards[randomIndex] = temporaryCard;
+        }
+        currentIndex = 0;
+        isFlipped = false;
+        renderCard();
+      }
+
+      function resetDeck() {
+        cards = originalCards.slice();
+        currentIndex = 0;
+        isFlipped = false;
+        renderCard();
+      }
+
+      function renderPrintCards() {
+        printGrid.innerHTML = '';
+        originalCards.forEach(function (card, index) {
+          const printCard = document.createElement('article');
+          printCard.className = 'print-card';
+
+          const term = document.createElement('div');
+          term.className = 'print-term';
+          term.textContent = (index + 1) + '. ' + card.term;
+
+          const definition = document.createElement('div');
+          definition.className = 'print-definition';
+          definition.textContent = card.definition;
+
+          printCard.appendChild(term);
+          printCard.appendChild(definition);
+          printGrid.appendChild(printCard);
+        });
+      }
+
+      app.addEventListener('click', function (event) {
+        const actionTarget = event.target.closest('[data-action]');
+        if (!actionTarget || !app.contains(actionTarget)) return;
+
+        const action = actionTarget.dataset.action;
+        if (action === 'flip') flipCard();
+        if (action === 'previous') moveCard(-1);
+        if (action === 'next') moveCard(1);
+        if (action === 'shuffle') shuffleCards();
+        if (action === 'reset') resetDeck();
+        if (action === 'print') window.print();
+      });
+
+      app.addEventListener('keydown', function (event) {
+        if (event.target !== flashcard && event.target.tagName !== 'BODY') return;
+
+        if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          moveCard(-1);
+        } else if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          moveCard(1);
+        } else if (event.key === ' ') {
+          event.preventDefault();
+          flipCard();
+        }
+      });
+
+      document.addEventListener('wheel', function (event) {
+        if (event.target.matches('input[type="number"]')) event.preventDefault();
+      }, { passive: false });
+
+      renderPrintCards();
+      renderCard();
+    });
+  </script>
+</body>
+</html>
